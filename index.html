@@ -1,26 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style/style.css">
-    <title>Document</title>
-  </head>
-  <body>
-    <div class="app">
-      <div class="card">
-        <div class="country"></div>
-        <div class="location"></div>
-        <div class="weather-info">
-          <div class="temperature"></div>
-          <div class="description"></div>
-        </div>
-        <div class="footer">Weather App &copy; 2023</div>
-      </div>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/style.css">
+  <title>Weather App</title>
+</head>
+<body>
+  <div class="container">
+    <h1 class="title">Weather App</h1>
+    <div class="input-container">
+      <form id="location-form">
+        <input type="text" id="location-input" placeholder="Enter location">
+        <button type="submit" id="searchbtn">Get Weather</button>
+      </form>
     </div>
-    
-    <script type="module" src="script.js"></script>
-  </body>
+    <div class="weather-result" id="weather-result"></div>
+  </div>
+  <script type="module" src="app.js"></script>
+</body>
 </html>

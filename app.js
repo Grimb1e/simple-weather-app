@@ -1,26 +1,54 @@
-const temperature = document.querySelector(".temperature");
-const countryElement = document.querySelector(".country");
-const locationElement = document.querySelector(".location");
-const descriptionElement = document.querySelector(".description");
-const weathericonElement = document.querySelector(".weather-icon");
+const searchWeather = document.getElementById("location-form");
+const weatherBtn = document.getElementById("searchbtn");
+const weatherResult = document.getElementById("weather-result");
+
+const options = {
+  method: "GET",
+  headers: {
+    "X-RapidAPI-Key": "3a253cb5bemshf34d8e65a43a7e6p1a7561jsne18149920743",
+    "X-RapidAPI-Host": "weatherapi-com.p.rapidapi.com",
+  },
+};
 
 const getWeather = async () => {
+  const title = searchWeather.querySelector("#location-input").value;
+  const url = `https://weatherapi-com.p.rapidapi.com/current.json?q=${encodeURIComponent(
+    title
+  )}`;
+
+  if (title.trim().length < 3) {
+    weatherResult.innerHTML = "<p>Please enter at least 3 characters. 🙏</p>";
+    weatherResult.style.backgroundColor = "#fff";
+    return;
+  }
+
   try {
-    const response = await fetch(
-      "https://api.openweathermap.org/data/2.5/forecast?q=new york&appid=e8fd275a64164113eaf7a4b85fdfb157&units=metric"
-    );
+    const response = await fetch(url, options);
     const data = await response.json();
-    const countryName = data.city.country;
-    countryElement.innerHTML = countryName;
-    const cityName = data.city.name;
-    locationElement.innerHTML = cityName;
-    const tempDescription = data.list[0].main.temp;
-    temperature.innerHTML = tempDescription;
-    const weatherDesciption = data.list[0].weather[0].description;
-    descriptionElement.innerHTML = weatherDesciption;
+    if (!data.location) {
+      weatherResult.innerHTML =
+        "<p>Location not found. Please enter a valid location. 😿</p>";
+      weatherResult.style.backgroundColor = "#fff";
+      return;
+    } else {
+      weatherResult.innerHTML = `<span>Country: ${data.location.country}</span> 
+      <p>City: ${data.location.name}</p>
+      <p>Localtime: ${data.location.localtime}</p>
+      <span>Temp: ${data.current.temp_c}&#8451;</span>`;
+      weatherResult.style.backgroundImage = `url(${data.current.condition.icon})`;
+      weatherResult.style.backgroundColor = "#fff";
+    }
   } catch (error) {
     console.log(error);
   }
 };
 
-getWeather();
+searchWeather.addEventListener("submit", (e) => {
+  e.preventDefault();
+  getWeather();
+});
+
+weatherBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  getWeather();
+});
